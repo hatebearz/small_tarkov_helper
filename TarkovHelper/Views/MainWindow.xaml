@@ -1,0 +1,209 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:TarkovHelper.ViewModels;assembly=TarkovHelper"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:model="clr-namespace:TarkovHelper.Models;assembly=TarkovHelper"
+        xmlns:converters="clr-namespace:TarkovHelper.Converters;assembly=TarkovHelper"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="TarkovHelper.Views.MainWindow"
+        x:Name="root"
+        Icon="/Assets/avalonia-logo.ico"
+        FontFamily="resm:TarkovHelper.Fonts.?assembly=TarkovHelper#Roboto"
+        FontWeight="Regular"
+        Title="TarkovHelper">
+  <Window.Resources>
+    <SolidColorBrush x:Key="BackgroundAccentBrush1" Color="#ff6f00" />
+    <SolidColorBrush x:Key="ForegroundAccentBrush1" Color="#ffffff" />
+    <SolidColorBrush x:Key="BackgroundAccentBrush2" Color="#e65100" />
+  </Window.Resources>
+  <Window.Styles>
+    <Style Selector="Menu">
+      <Setter Property="Padding" Value="0" />
+      <Setter Property="Margin" Value="0" />
+      <Setter Property="Height" Value="40" />
+      <Setter Property="Background" Value="{DynamicResource BackgroundAccentBrush1}" />
+    </Style>
+    <Style Selector="MenuItem">
+      <Setter Property="Background" Value="{DynamicResource BackgroundAccentBrush1}" />
+      <Setter Property="Foreground" Value="{DynamicResource ForegroundAccentBrush1}" />
+      <Setter Property="FontSize" Value="18" />
+      <Setter Property="Margin" Value="0" />
+      <Setter Property="Padding" Value="6" />
+    </Style>
+    <Style Selector="MenuItem ContentPresenter">
+      <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+    <Style Selector="MenuItem:selected /template/ Border#root">
+      <Setter Property="Background" Value="#ff8f00" />
+      <Setter Property="BorderBrush" Value="#ff8f00"/>
+    </Style>
+    <Style Selector="TabControl">
+      <Setter Property="Background" Value="#ffffff" />
+      <Setter Property="Foreground" Value="#ffffff" />
+    </Style>
+    <Style Selector="TabControl[TabStripPlacement=Top]">
+      <Setter Property="Padding" Value="0 0 0 0"/>
+    </Style>
+    <Style Selector="TabControl WrapPanel">
+      <Setter Property="Background" Value="#212121" />
+    </Style>
+    <Style Selector="TabItem">
+      <Setter Property="Padding" Value="6" />
+      <Setter Property="Height" Value="40" />
+    </Style>
+      <Style Selector="TabItem:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+      <Setter Property="Background" Value="#ff8f00"/>
+    </Style>
+    <Style Selector="TabItem:selected /template/ ContentPresenter#PART_ContentPresenter">
+      <Setter Property="Background" Value="{DynamicResource BackgroundAccentBrush1}"/>
+    </Style>
+    <Style Selector="TabItem TextBlock">
+      <Setter Property="FontSize" Value="20" />
+    </Style>
+    <Style Selector="TabItem:selected TextBlock">
+      <Setter Property="FontWeight" Value="Medium" />
+    </Style>
+
+    <Style Selector="DataGrid">
+      <Setter Property="FontSize" Value="16" />
+      <Setter Property="BorderThickness" Value="0" />
+      <Setter Property="RowBackground" Value="#f5f5f5" />
+      <Setter Property="AlternatingRowBackground" Value="#c2c2c2" />
+      <Setter Property="Foreground" Value="#000000" />
+      <Setter Property="Padding" Value="6" />
+    </Style>
+    <Style Selector="DataGridColumnHeader">
+      <Setter Property="Background" Value="#ef5350" />
+      <Setter Property="Foreground" Value="#ffffff" />
+    </Style>
+    <Style Selector="DataGridColumnHeader:pointerover">
+      <Setter Property="Background" Value="#b61827" />
+    </Style>
+    <Style Selector="DataGridCell TextBlock">
+      <Setter Property="FontSize" Value="16" />
+    </Style>
+    <Style Selector="DataGridCell TextBox">
+      <Setter Property="FontSize" Value="16" />
+      <Setter Property="VerticalAlignment" Value="Center" />
+      <Setter Property="BorderThickness" Value="0" />
+    </Style>
+    <Style Selector="DataGridRow:pointerover">
+      <Setter Property="Background" Value="#b61827" />
+    </Style>
+    <Style Selector="TextBox /template/ Panel">
+      <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+    <Style Selector="TextBox /template/ Border">
+      <Setter Property="CornerRadius" Value="2" />
+    </Style>
+   <Style Selector="ComboBox Border">
+      <Setter Property="CornerRadius" Value="2" />
+    </Style>
+  </Window.Styles>
+  <TabControl>
+    <TabItem Header="Вещи">
+      <DockPanel>
+        <Menu DockPanel.Dock="Top">
+          <MenuItem Header="Добавить ништяк" Command="{Binding AddItemCommand}" />
+          <MenuItem Header="Удалить ништяк" Command="{Binding DeleteItemCommand}" />
+          <MenuItem Header="Добавить нужность" Command="{Binding AddRequirementCommand}" />
+        </Menu>
+        <TextBox Text="{Binding SearchText}" Watermark="Поиск" DockPanel.Dock="Top" Foreground="#000000" UseFloatingWatermark="True" />
+        <DataGrid
+          x:Name="ItemsDataGrid"
+          AutoGenerateColumns="False" IsReadOnly="False" CanUserReorderColumns="False" CanUserResizeColumns="True" CanUserSortColumns="True"
+          >
+          <DataGrid.Columns>
+            <DataGridTextColumn Header="Ништяк" Binding="{Binding Name}" Width="Auto" />
+            <DataGridTextColumn Header="Цена" Binding="{Binding Price}" Width="Auto" />
+            <DataGridTemplateColumn Header="Нужен для" Width="*">
+              <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                <ItemsControl Items="{Binding Requirements}">
+                  <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                      <Grid>
+                        <Grid.Styles>
+                          <Style Selector="Button">
+                            <Setter Property="BorderBrush" Value="{TemplateBinding Background}"/>
+                          </Style>
+                          <Style Selector="Button /template/ Border">
+                            <Setter Property="CornerRadius" Value="2" />
+                          </Style>
+                          <Style Selector="Button:pointerover /template/ ContentPresenter">
+                            <Setter Property="BorderBrush" Value="{TemplateBinding Background}"/>
+                          </Style>
+                        </Grid.Styles>
+                        <Grid.ColumnDefinitions>
+                          <ColumnDefinition Width="Auto" />
+                          <ColumnDefinition />
+                          <ColumnDefinition Width="Auto" />
+                          <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                          <RowDefinition />
+                          <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <DropDown
+                          Grid.Column="0"
+                          Grid.RowSpan="2"
+                          Items="{Binding $parent[Window].DataContext.RequirementKinds, Converter={converters:RequirementKindToStringConverter}, Mode=OneTime}"
+                          SelectedItem="{Binding Kind, Converter={converters:RequirementKindToStringConverter}}"
+                          Width="100" 
+                          Margin="1" />
+                        <TextBox 
+                          VerticalAlignment="Stretch"
+                          Text="{Binding For}" 
+                          Watermark="Нужен для" 
+                          Margin="1" 
+                          Grid.Column="1" 
+                          Grid.RowSpan="2" />
+                        <TextBox
+                          VerticalAlignment="Stretch"
+                          Text="{Binding Amount}"
+                          Grid.Column="2"
+                          Watermark="В количестве"
+                          Margin="1"
+                          Width="100"
+                          Grid.RowSpan="2" />
+                        <Button
+                          Height="20"
+                          Width="20"
+                          Content="+"
+                          Padding="0"
+                          Grid.Column="3"
+                          Grid.Row="0"
+                          Command="{Binding $parent[Window].DataContext.IncrementAmountCommand, Mode=OneTime}"
+                          CommandParameter="{Binding}"
+                          Background="#aeea00" />
+                        <Button 
+                          Height="20"
+                          Width="20"
+                          Padding="0"
+                          Content="-" 
+                          Grid.Column="3" 
+                          Grid.Row="1" 
+                          Command="{Binding $parent[Window].DataContext.DecrementAmountCommand, Mode=OneTime}" 
+                          CommandParameter="{Binding}"
+                          Background="#ff1744" />
+                      </Grid>
+                    </DataTemplate>
+                  </ItemsControl.ItemTemplate>
+                </ItemsControl>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTextColumn Header="Всего нужно" Binding="{Binding Total}" />
+          </DataGrid.Columns>
+        </DataGrid>
+      </DockPanel>
+    </TabItem>
+    <TabItem Header="Потребности">
+    </TabItem>
+    <TabItem Header="Настройки">
+      
+    </TabItem>
+  </TabControl>
+</Window>

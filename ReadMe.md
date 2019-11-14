@@ -1,0 +1,1 @@
+Утилитка для Таркова, сбацанная на ReactiveExtensions, DynamicData, ReactiveUI и Avalonia.

@@ -1,0 +1,52 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFrameworks>netcoreapp3.0</TargetFrameworks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Update="**\*.xaml.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <AvaloniaResource Include="**\*.xaml">
+      <SubType>Designer</SubType>
+    </AvaloniaResource>
+    <AvaloniaResource Include="Assets\*" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Assets\Roboto-Black.ttf" />
+    <None Remove="Assets\Roboto-BlackItalic.ttf" />
+    <None Remove="Assets\Roboto-Bold.ttf" />
+    <None Remove="Assets\Roboto-BoldItalic.ttf" />
+    <None Remove="Assets\Roboto-Italic.ttf" />
+    <None Remove="Assets\Roboto-Light.ttf" />
+    <None Remove="Assets\Roboto-LightItalic.ttf" />
+    <None Remove="Assets\Roboto-Medium.ttf" />
+    <None Remove="Assets\Roboto-MediumItalic.ttf" />
+    <None Remove="Assets\Roboto-Regular.ttf" />
+    <None Remove="Assets\Roboto-Thin.ttf" />
+    <None Remove="Assets\Roboto-ThinItalic.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Fonts\Roboto-Black.ttf" />
+    <EmbeddedResource Include="Fonts\Roboto-BlackItalic.ttf" />
+    <EmbeddedResource Include="Fonts\Roboto-Bold.ttf" />
+    <EmbeddedResource Include="Fonts\Roboto-BoldItalic.ttf" />
+    <EmbeddedResource Include="Fonts\Roboto-Italic.ttf" />
+    <EmbeddedResource Include="Fonts\Roboto-Light.ttf" />
+    <EmbeddedResource Include="Fonts\Roboto-LightItalic.ttf" />
+    <EmbeddedResource Include="Fonts\Roboto-Medium.ttf" />
+    <EmbeddedResource Include="Fonts\Roboto-MediumItalic.ttf" />
+    <EmbeddedResource Include="Fonts\Roboto-Regular.ttf" />
+    <EmbeddedResource Include="Fonts\Roboto-Thin.ttf" />
+    <EmbeddedResource Include="Fonts\Roboto-ThinItalic.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="0.9.0-preview7" />
+    <PackageReference Include="Avalonia.Controls.DataGrid" Version="0.9.0-preview7" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.9.0-preview7" />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="0.9.0-preview7" />
+    <PackageReference Include="FluentValidation" Version="8.5.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+    <PackageReference Include="ReactiveUI.Fody" Version="9.22.1" />
+  </ItemGroup>
+</Project>
