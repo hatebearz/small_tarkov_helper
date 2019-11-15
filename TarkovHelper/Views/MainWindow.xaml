@@ -146,10 +146,10 @@
                           <RowDefinition />
                           <RowDefinition />
                         </Grid.RowDefinitions>
-                        <DropDown
+                        <ComboBox
                           Grid.Column="0"
                           Grid.RowSpan="2"
-                          Items="{Binding $parent[Window].DataContext.RequirementKinds, Converter={converters:RequirementKindToStringConverter}, Mode=OneTime}"
+                          Items="{Binding #root.DataContext.RequirementKinds, Converter={converters:RequirementKindToStringConverter}, Mode=OneTime}"
                           SelectedItem="{Binding Kind, Converter={converters:RequirementKindToStringConverter}}"
                           Width="100" 
                           Margin="1" />
